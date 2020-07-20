@@ -1,5 +1,5 @@
 # SideProject2020
-SideProject2020: Using Stanford's Dog images dataset to create a website that can help prevent dog illnesses based on the breed! 
+#### Using Stanford's Dog images dataset to create a website that can help prevent dog illnesses based on the breed! 
 <br />
 1.The user will upload their dog's image on our site, 
 <br />

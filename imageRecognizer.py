@@ -1,4 +1,8 @@
 
 git status
 git add . 
-add everythuing
+
+git commit -m "created imageRecognizer file"
+
+djeidjeudjxnkhdnendbjndxnjndedjd
+done making up to here.

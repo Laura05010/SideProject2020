@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 #VIDEO 12:46
-=======
-#VIDEO 3:27
->>>>>>> 1c94912575fdbed09bbcc43b004f20aefa56e06b
 #pip install pandas
 #pip install opencv-python
 #pip install tensorflow
@@ -21,7 +17,6 @@ from tensorflow.keras.optimizers import Adam
 
 from sklearn.model_selection import train_test_split
 
-<<<<<<< HEAD
 def build_model(size, num_classes):
   inputs = Input((size, size, 3))
   backbone = MobileNetV2(input_tensor=inputs, include_top=False, weights="imagenet")
@@ -35,8 +30,7 @@ def build_model(size, num_classes):
   model = tf.keras.Model(inputs, x)
   return model
 
-=======
->>>>>>> 1c94912575fdbed09bbcc43b004f20aefa56e06b
+
 if __name__ == "__main__":
   path = "dog-breed-identification/"
   train_path = os.path.join(path, "train/*")
@@ -47,7 +41,6 @@ if __name__ == "__main__":
   breed = labels_df["breed"].unique() 
   #breed = the list of unique breed
   #.unique() is unique list of values from a particular column
-<<<<<<< HEAD
   print("Number of breeds: ", len(breed))
   #creating a dictionary by indexing the breeds of the list
   breed2id = {name: i for i, name in enumerate(breed)}
@@ -74,8 +67,5 @@ if __name__ == "__main__":
 
   #Build the model_selection
 
-  
-  
-=======
   print(breed)
->>>>>>> 1c94912575fdbed09bbcc43b004f20aefa56e06b
+

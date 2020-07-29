@@ -1,8 +1,9 @@
-#VIDEO 12:46
+#VIDEO 21:30
 #pip install pandas
 #pip install opencv-python
 #pip install tensorflow
 #pip install sklearn
+
 import os
 import numpy as np
 import pandas as pd
@@ -16,8 +17,8 @@ from tensorflow.keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
 from tensorflow.keras.optimizers import Adam
 
 from sklearn.model_selection import train_test_split
-
-def build_model(size, num_classes):
+#----------------------to learn ---------------------------#
+def build_model(size, num_classes): 
   inputs = Input((size, size, 3))
   backbone = MobileNetV2(input_tensor=inputs, include_top=False, weights="imagenet")
   backbone.trainable = True
@@ -29,7 +30,38 @@ def build_model(size, num_classes):
 
   model = tf.keras.Model(inputs, x)
   return model
+#-------------------------------------------------#
 
+#BUILDING A FUNCTION TO VIEW THE IMAGE AND RESIZE
+def read_image(path, size):
+  image = cv2.imread(path, cv2.IMREAD_COLOR)
+  image = cv2.resize(image, (size,size))
+  image = image/255.0
+  image = image.astype(np.float32)
+  return image
+
+def parse_data(x,y):
+  x = x.decode()
+
+  num_class = 120 #120 breeds
+  size = 224
+
+  image = read_image(x, size)
+  label = [0] * num_class
+  label[y] = 1
+  label = np.array(label)
+  label = label.astype(np.int32)
+
+  return image, label
+
+def tf_parse(x, y):
+  return tf.numpy_function(parse_data, [x, y], [tf.float32, tf.int32])
+
+def tf_dataset(x, y, batch=8):
+  dataset = tf.data.Dataset.from_tensor_slices((x, y))
+  dataset = dataset.map(tf_parse)
+  dataset = dataset.batch(batch)
+  return dataset
 
 if __name__ == "__main__":
   path = "dog-breed-identification/"
@@ -66,6 +98,14 @@ if __name__ == "__main__":
   epochs = 10
 
   #Build the model_selection
+  model = build_model(size, num_classes)
+  model.compile(loss="categorical_crossentropy", optimizer=Adam(learning_rate), metrics=["acc"])
+  # model.summary()
 
-  print(breed)
-
+  #Dataset
+  train_dataset = tf_dataset(train_x, train_y, batch=batch)
+  valid_dataset = tf_dataset(valid_x, valid_y, batch=batch)
+  
+  for x, y in valid_dataset:
+    print(x.shape, y.shape)
+  

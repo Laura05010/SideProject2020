@@ -102,7 +102,6 @@ if __name__ == "__main__":
   model.compile(loss="categorical_crossentropy", optimizer=Adam(learning_rate), metrics=["acc"])
   # model.summary()
 
-<<<<<<< HEAD
   #Dataset
   train_dataset = tf_dataset(train_x, train_y, batch=batch)
   valid_dataset = tf_dataset(valid_x, valid_y, batch=batch)
@@ -110,6 +109,4 @@ if __name__ == "__main__":
   for x, y in valid_dataset:
     print(x.shape, y.shape)
   
-=======
-  print(breed)
->>>>>>> b35ed9dc8bc80bd0195b0f79cad017e77b2f4bba
+

@@ -36,7 +36,7 @@ def build_model(size, num_classes):
 def read_image(path, size):
   image = cv2.imread(path, cv2.IMREAD_COLOR)
   image = cv2.resize(image, (size,size))
-  image = image/255.0
+  image = image / 255.0
   image = image.astype(np.float32)
   return image
 
@@ -55,12 +55,16 @@ def parse_data(x,y):
   return image, label
 
 def tf_parse(x, y):
-  return tf.numpy_function(parse_data, [x, y], [tf.float32, tf.int32])
+  x, y = tf.numpy_function(parse_data, [x, y], [tf.float32, tf.int32])
+  x.set_shape((224, 224, 3))
+  y.set_shape((120))
+  return x, y
 
 def tf_dataset(x, y, batch=8):
   dataset = tf.data.Dataset.from_tensor_slices((x, y))
   dataset = dataset.map(tf_parse)
   dataset = dataset.batch(batch)
+  dataset = dataset.repeat()
   return dataset
 
 if __name__ == "__main__":
@@ -79,12 +83,16 @@ if __name__ == "__main__":
   
   ids = glob(train_path) #list of the path to all images
   labels = []
+
   for image_id in ids:
     image_id = image_id.split("/")[-1].split(".")[0]
      #last element of lst of "/" and the first element of the list "."!!!
     breed_name = list(labels_df[labels_df.id == image_id]["breed"])[0] #string obj, realted to the ids on csv
     breed_index = breed2id[breed_name]
     labels.append(breed_index)
+
+  ids = ids[:1000]
+  labels = labels[:1000]
 
   #Splitting the dataset
   train_x, valid_x = train_test_split(ids, test_size=0.2, random_state=42)
@@ -94,7 +102,7 @@ if __name__ == "__main__":
   size = 224
   num_classes = 120 
   learning_rate = 1e-4
-  batch = 8
+  batch = 16
   epochs = 10
 
   #Build the model_selection
@@ -102,14 +110,23 @@ if __name__ == "__main__":
   model.compile(loss="categorical_crossentropy", optimizer=Adam(learning_rate), metrics=["acc"])
   # model.summary()
 
-<<<<<<< HEAD
   #Dataset
   train_dataset = tf_dataset(train_x, train_y, batch=batch)
   valid_dataset = tf_dataset(valid_x, valid_y, batch=batch)
+
+  # Training
+  callbacks = [
+    ModelCheckpoint("model.h5", verbose=1, save_best_only=True),
+    ReduceLROnPlateau(factor=0.1, patience=5, min_lr=1e-6)
+  ]
+
+  train_steps = (len(train_x)//batch) + 1
+  valid_steps = (len(valid_x)//batch) + 1
+  model.fit(train_dataset, 
+  steps_per_epoch=train_steps,
+  validation_steps=valid_steps,
+  validation_data=valid_dataset, 
+  epochs=epochs, callbacks=callbacks)
   
-  for x, y in valid_dataset:
-    print(x.shape, y.shape)
   
-=======
-  print(breed)
->>>>>>> b35ed9dc8bc80bd0195b0f79cad017e77b2f4bba
+

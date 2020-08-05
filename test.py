@@ -1,4 +1,4 @@
-#pip install pandas
+#pip install panda
 #pip install opencv-python
 #pip install tensorflow
 #pip install sklearn

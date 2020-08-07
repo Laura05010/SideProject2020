@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #pip install pandas
+=======
+#pip install panda
+>>>>>>> 27ec52b5b3bb2700eab4cde5ac86cf4e8a2b595a
 #pip install opencv-python
 #pip install tensorflow
 #pip install sklearn
@@ -64,6 +68,7 @@ if __name__ == "__main__":
     ori_breed = id2breed[valid_y[1]]
     ori_image = cv2.imread(path, cv2.IMREAD_COLOR)
 
+<<<<<<< HEAD
   #WHAT ITS SUPPOSED TO BE 
     ori_image = cv2.putText(ori_image, breed_name, (0,10), cv2.FONT_HERSHEY_SIMPLEX, 0.5,(255,0,0), 1)
 
@@ -73,3 +78,10 @@ if __name__ == "__main__":
     filename = "save/valid_{i}.png".format(i=i)
     #f"save/valid_{i}.png"
     cv2.imwrite(filename, ori_image)
+=======
+    ori_image = cv2.putText(ori_image, breed_name, (0,10), cv2.FONT_HERSHEY_SIMPLEX, 0.5,(255,0,0), 1)
+
+    ori_image = cv2.putText(ori_image, ori_breed, (0, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
+    
+    cv2.imwrite(f"save/valid_{i}.png", ori_image)
+>>>>>>> 27ec52b5b3bb2700eab4cde5ac86cf4e8a2b595a

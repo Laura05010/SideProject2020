@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 #pip install pandas
-=======
-#pip install panda
->>>>>>> 27ec52b5b3bb2700eab4cde5ac86cf4e8a2b595a
 #pip install opencv-python
 #pip install tensorflow
 #pip install sklearn

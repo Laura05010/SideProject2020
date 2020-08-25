@@ -68,4 +68,7 @@ if __name__ == "__main__":
 
     ori_image = cv2.putText(ori_image, ori_breed, (0, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
     
-    cv2.imwrite(f"save/valid_{i}.png", ori_image)
+    # cv2.imwrite(f"save/valid_{i}.png", ori_image
+    filename = "save/valid_{i}.png".format(i=i)
+    #f"save/valid_{i}.png"
+    cv2.imwrite(filename, ori_image)

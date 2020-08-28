@@ -9,18 +9,33 @@ class BreedSpider(scrapy.Spider):
   
   def parse(self, response):
     #for breed in response.xpath("//div[@class= 'entry-content']/ul/li"):
-      yield {
-        'alpha_headings': response.xpath("//div[@class= 'entry-content']/ul/li[@class ='alpha-heading']").getall(),
-        'entire_list': response.xpath("//div[@class= 'entry-content']/ul/li/a").getall()
-      }
-
+    # alphabet = yield {'alpha_headings': response.xpath("//div[@class= 'entry-content']/ul/li[@class ='alpha-heading']").extract()}
+    entire_list = yield {'list': response.xpath("//div[@class= 'entry-content']/ul/li/a").extract()}
+    
   
+
+      # yield {
+      #   'alpha_headings': response.xpath("//div[@class= 'entry-content']/ul/li[@class ='alpha-heading']").extract(),
+      #   'entire_list': response.xpath("//div[@class= 'entry-content']/ul/li/a").extract()
+      #   }
+
+
+      
+  
+
+      
+
+      
+        
+      
+
+
+
+
+  #scrapy parse --spider=dog_breed_scraper 'http://www.dogbreedhealth.com/list-of-dog-breeds/'
   # Alphabet = parse(response)
   # print(Alphabet)
   
-#POTENTIAL STEPS TO TAKE
-    #iterate through A,B,C ..
-
-    #iterate through entire list
-
+#GOAL:
+#breed_names = {breed:link}
 

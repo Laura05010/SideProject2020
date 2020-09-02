@@ -2,17 +2,21 @@ import sys
 import scrapy
 import csv
 
-class BreedSpider(scrapy.Spider):
-  name = 'dog_breed_scraper'
+class infoSpider(scrapy.Spider):
+  name = 'info_breed_scraper'
   #List of URLS to scrape
-  start_urls = ['http://www.dogbreedhealth.com/list-of-dog-breeds/']
+  start_urls = ['http://www.dogbreedhealth.com/shih-tzu/'] 
+  # When we make the class, we call the variable in the class
+  
   
   def parse(self, response):
     # for breed in response.xpath("//div[@class= 'entry-content']/ul/li"):
     # alphabet = yield {'alpha_headings': response.xpath("//div[@class= 'entry-content']/ul/li[@class ='alpha-heading']").extract()}
     
       yield {
-        'list': response.xpath("//div[@class= 'entry-content']/ul/li/a").extract()
+        'Lifestyle Needs': response.xpath("//div[@class= 'lifestyle']/p[2]").extract(),
+        'Health & Welfare Problems': response.xpath("//div[@class= 'entry-content breed-footer']/ul[1]/li").extract(),
+        'Other Disease Reported': response.xpath("//div[@class= 'entry-content breed-footer']/ul[2]/li").extract()
         }
 
 
@@ -31,13 +35,13 @@ class BreedSpider(scrapy.Spider):
 #Heading
 #//div[@class= 'entry-content breed-footer']/p[@class= 'global-heading sub-headed'][2]
 #Info 
-#//div[@class= 'entry-content breed-footer']/ul[1]
+#//div[@class= 'entry-content breed-footer']/ul[1]/li
 
 
 #OTHER DISEASES REPORTED
 #Heading
 #//div[@class= 'entry-content breed-footer']/p[@class= 'global-heading sub-headed'][4]
 #Info
-#//div[@class= 'entry-content breed-footer']/ul[2]
+#//div[@class= 'entry-content breed-footer']/ul[2]/li
 
 

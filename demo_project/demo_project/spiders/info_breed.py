@@ -14,7 +14,7 @@ class infoSpider(scrapy.Spider):
     # alphabet = yield {'alpha_headings': response.xpath("//div[@class= 'entry-content']/ul/li[@class ='alpha-heading']").extract()}
     
       yield {
-        'Lifestyle Needs': response.xpath("//div[@class= 'lifestyle']/p[2]").extract(),
+        'Lifestyle Needs': response.xpath("//div[@class= 'lifestyle']//p[2]").extract(),
         'Health & Welfare Problems': response.xpath("//div[@class= 'entry-content breed-footer']/ul[1]/li").extract(),
         'Other Disease Reported': response.xpath("//div[@class= 'entry-content breed-footer']/ul[2]/li").extract()
         }
